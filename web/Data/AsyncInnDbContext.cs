@@ -1,0 +1,37 @@
+﻿using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
+using System.Numerics;
+using web.Models;
+
+namespace web.Data
+{
+    public class AsyncInnDbContext: DbContext
+    {
+        public AsyncInnDbContext(DbContextOptions options): base(options)
+        {
+
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Hotel>().HasData(
+                new Hotel() { Id = 1, Name = "cont", StreetAddress="23.st", City ="NY", State ="NY", Country ="US", Phone ="1233442"},
+                new Hotel() { Id = 2, Name = "res"  ,StreetAddress = "25.st", City = "LA", State = "LA", Country = "US", Phone = "1233444442" },
+                new Hotel() { Id = 3, Name = "hunt"  ,StreetAddress = "28.st", City = "TX", State = "TX", Country = "US", Phone = "123223442" }
+                );
+            modelBuilder.Entity<Room>().HasData(
+              new Room() { Id = 1, Name = "honey" , Layout = 1 },
+              new Room() { Id = 2, Name = "red" , Layout = 2 },
+              new Room() { Id = 3, Name = "white" , Layout = 3 }
+              );
+            modelBuilder.Entity<Amenity>().HasData(
+              new Amenity() { Id = 1, Name = "AC" },
+              new Amenity() { Id = 2, Name = "coffeeBar" },
+              new Amenity() { Id = 3, Name = "Fridge"}
+              );
+        }
+        public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Amenity> Amenities { get; set; }
+
+    }
+}
