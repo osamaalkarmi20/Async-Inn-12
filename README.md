@@ -59,3 +59,10 @@ additional attributes:
 the Location_Room table serves as a  Pure Joint table, consisting of foreign keys that reference the primary keys of the location  and Room tables and doesnot includes  any additional attributes or payload information.
 
 
+## Repository Pattern:
+`HotelService` and `RoomService` and `AmenityService`  which serves as a centralized data access component following characteristics of the **Repository Pattern**.
+Despite being named as a "service," it functions as a repository for (hotel/room/amenity )related data operations. 
+It abstracts the underlying data storage (database) using Entity Framework Core and exposes methods to handle creating, retrieving, updating, and deleting (hotel/room/amenity) data.
+
+The `IHotel` `IRoom` `IAmenity` interfaces serves as a contract that any class representing a (hotel/room/amenity)   repository .
+By defining these methods in the interface, the application can achieve decoupling between the data access layer and the rest of the application, enabling flexible data storage implementations and improving testability and maintainability.
