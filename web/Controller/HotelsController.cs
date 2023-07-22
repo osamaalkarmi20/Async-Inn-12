@@ -45,7 +45,7 @@ namespace web.Controller
                 return BadRequest();
             }
 
-         return  Ok(await _hotel.Update(id));
+         return  Ok(await _hotel.Update(id, hotel));
 
 
         }

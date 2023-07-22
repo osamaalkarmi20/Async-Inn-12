@@ -49,7 +49,7 @@ namespace web.Controller
                 return BadRequest();
             }
 
-            var updateCourse = await _room.Update(id);
+            var updateCourse = await _room.Update(id,  room);
 
             return  Ok(updateCourse);
         }

@@ -50,10 +50,11 @@ namespace web.Models.Services
                 return Amenities;
             }
 
-            public async Task<Amenity> Update(int id)
+            public async Task<Amenity> Update(int id, Amenity updatedAmenity)
         {
             Amenity amenity = await GetId(id);
-
+            amenity.Name = updatedAmenity.Name;
+        
             _context.Entry(amenity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
