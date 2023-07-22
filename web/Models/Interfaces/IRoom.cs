@@ -6,7 +6,7 @@
         Task<List<Room>> Get();
         Task<Room> GetId(int roomId);
 
-        Task<Room> Update(int id);
+        Task<Room> Update(int id, Room updatedRoom);
         Task<Room> Delete(int id);
 
     }

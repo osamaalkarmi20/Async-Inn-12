@@ -51,9 +51,15 @@ namespace web.Models.Services
                 return hotels;
             }
 
-            public async Task<Hotel> Update(int id)
+            public async Task<Hotel> Update(int id, Hotel updateedHotel)
             {
             Hotel hotel = await GetId(id);
+            hotel.Name = updateedHotel.Name;
+            hotel.StreetAddress = updateedHotel.StreetAddress;
+            hotel.City = updateedHotel.City;
+            hotel.State = updateedHotel.State;
+            hotel.Country = updateedHotel.Country;
+            hotel.Phone = updateedHotel.Phone;
             _context.Entry(hotel).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 

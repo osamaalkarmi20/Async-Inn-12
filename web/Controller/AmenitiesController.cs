@@ -49,7 +49,7 @@ namespace web.Controller
             }
 
            
-            return Ok(await _amenity.Update(id));
+            return Ok(await _amenity.Update(id, amenity));
         }
 
         // POST: api/Amenities

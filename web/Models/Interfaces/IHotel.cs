@@ -6,7 +6,7 @@
         Task<List<Hotel>> Get();
         Task<Hotel> GetId(int hotelId);
 
-        Task<Hotel> Update(int id);
+        Task<Hotel> Update(int id, Hotel updateedHotel);
         Task<Hotel> Delete(int id);
 
     }

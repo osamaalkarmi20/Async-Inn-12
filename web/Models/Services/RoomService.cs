@@ -50,12 +50,15 @@ namespace web.Models.Services
                 return rooms;
             }
 
-            public async Task<Room> Update(int id)
+            public async Task<Room> Update(int id, Room updatedRoom)
         {
 
             Room room = await GetId(id);
 
-            _context.Entry(room).State = EntityState.Modified;
+                 room.Name = updatedRoom.Name;
+                 room.Layout = updatedRoom.Layout;
+              
+                _context.Entry(room).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
 

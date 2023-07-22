@@ -6,7 +6,7 @@
         Task<List<Amenity>> Get();
         Task<Amenity> GetId(int amenityId);
 
-        Task<Amenity> Update(int id);
+        Task<Amenity> Update(int id, Amenity updatedAmenity );
         Task<Amenity> Delete(int id);
 
     }
