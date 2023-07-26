@@ -89,4 +89,4 @@ this are the routes for the roomamentiy  table:
         }
     }
     ```
-this 
+this routes were to add and delet form the table roomamentiy.
