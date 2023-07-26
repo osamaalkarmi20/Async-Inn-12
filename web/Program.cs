@@ -14,11 +14,13 @@ namespace web
             builder.Services.AddControllers();
             string connString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<AsyncInnDbContext>(options=> options.UseSqlServer(connString));
-
+            builder.Services.AddControllers().AddNewtonsoftJson(options =>
+       options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+     );
             builder.Services.AddTransient<IRoom, RoomService>();
             builder.Services.AddTransient<IHotel, HotelService>();
             builder.Services.AddTransient<IAmenity, AmenityService>();
-
+            builder.Services.AddTransient<IHotelRoom, HotelRoomService>();
             var app = builder.Build();
             app.MapControllers();
 
