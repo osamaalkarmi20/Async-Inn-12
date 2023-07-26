@@ -2,6 +2,7 @@
 using System.Diagnostics.Metrics;
 using System.Numerics;
 using web.Models;
+using web.Models.Interfaces;
 
 namespace web.Data
 {
@@ -28,10 +29,16 @@ namespace web.Data
               new Amenity() { Id = 2, Name = "coffeeBar" },
               new Amenity() { Id = 3, Name = "Fridge"}
               );
+            modelBuilder.Entity<RoomAmenity>().HasKey(
+                roomamenity => new { roomamenity.RoomId, roomamenity.AmenityId });
+            modelBuilder.Entity<HotelRoom>().HasKey(
+            hotelroom => new { hotelroom.RoomId, hotelroom.HotelId });
         }
         public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<HotelRoom> HotelRooms{ get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Amenity> Amenities { get; set; }
-
+        public DbSet<RoomAmenity> AmeRoomAmenitiesnities { get; set; }
+     
     }
 }
