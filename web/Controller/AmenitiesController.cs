@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using web.Data;
 using web.Models;
+using web.Models.DTO;
 using web.Models.Interfaces;
 
 namespace web.Controller
@@ -24,7 +25,7 @@ namespace web.Controller
 
         // GET: api/Amenities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Amenity>>> GetAmenities()
+        public async Task<ActionResult<IEnumerable<AmenityDTO>>> GetAmenities()
         {
           
             return await _amenity.Get();
@@ -32,7 +33,7 @@ namespace web.Controller
 
         // GET: api/Amenities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Amenity>> GetAmenity(int id)
+        public async Task<ActionResult<AmenityDTO>> GetAmenity(int id)
         {
         
             return await _amenity.GetId(id);
@@ -55,7 +56,7 @@ namespace web.Controller
         // POST: api/Amenities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Amenity>> PostAmenity(Amenity amenity)
+        public async Task<ActionResult<AmenityDTO>> PostAmenity(Amenity amenity)
         {
 
             return await _amenity.Create(amenity);
@@ -63,13 +64,9 @@ namespace web.Controller
 
         // DELETE: api/Amenities/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAmenity(int id, Amenity amenity)
+        public async Task<IActionResult> DeleteAmenity(int id)
         {
-            if (id != amenity.Id)
-            {
-                return BadRequest();
-            }
-
+            
 
             return Ok(await _amenity.Delete(id));
         }

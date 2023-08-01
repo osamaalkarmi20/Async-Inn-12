@@ -1,13 +1,16 @@
-﻿namespace web.Models.Interfaces
+﻿using web.Models.DTO;
+
+namespace web.Models.Interfaces
+
 {
     public interface IAmenity
     {
-        Task<Amenity> Create(Amenity amenity);
-        Task<List<Amenity>> Get();
-        Task<Amenity> GetId(int amenityId);
+        Task<AmenityDTO> Create(Amenity amenity);
+        Task<List<AmenityDTO>> Get();
+        Task<AmenityDTO> GetId(int amenityId);
 
-        Task<Amenity> Update(int id, Amenity updatedAmenity );
-        Task<Amenity> Delete(int id);
+        Task<AmenityDTO> Update(int id, Amenity updatedAmenity );
+        Task<AmenityDTO> Delete(int id);
 
     }
 }
