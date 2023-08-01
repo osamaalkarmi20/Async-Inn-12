@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 using web.Data;
 using web.Models.Interfaces;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -20,26 +22,21 @@ namespace web.Models.Services
             _hotel = hotel;
         }
 
-        public async Task<HotelRoom> Create(int hotelId, int roomId, decimal rate, bool petfreindly)
+        public async Task<HotelRoom> Create(int hotelId, HotelRoom hotelRoom)
         {
-            HotelRoom CREATED = new HotelRoom()
-            {
-                
-                HotelId = hotelId,
-                RoomId = roomId,
-                RoomNumber = roomId * 100 + hotelId,
-                Rate = rate,
-                PetFreindly = petfreindly,
-                Room = await _room.GetId(hotelId),
-                Hotel = await _hotel.GetId(hotelId)
 
+            HotelRoom CREATED= new HotelRoom();
 
-            };
-
-      
-
-          _context.HotelRooms.Add(CREATED);
-
+         
+         
+            CREATED.HotelId = hotelId;
+            CREATED.RoomId = hotelRoom.RoomId;
+            CREATED.PetFreindly = hotelRoom.PetFreindly;
+            CREATED.Rate = hotelRoom.Rate;
+            CREATED.RoomNumber = hotelRoom.RoomNumber;
+            CREATED.Room = await _room.GetId(CREATED.RoomId);
+            CREATED.Hotel = await _hotel.GetId(hotelRoom.HotelId);
+            _context.Entry(CREATED).State = EntityState.Added;
             await _context.SaveChangesAsync();
 
 
@@ -49,24 +46,34 @@ namespace web.Models.Services
         {
 
             
-            var hotelRooms = await _context.HotelRooms.ToListAsync();
+            var hotelRooms = await _context.HotelRooms.Include(x => x.Room.RoomAmenities).Include(x => x.Hotel).ToListAsync();
 
 
 
             return hotelRooms;
         }
-        public async Task<HotelRoom> GetId(int hotelId,int RoomNumber)
+        public async Task<HotelRoom> GetId(int hotelId, int RoomNumber)
         {
 
 
             var hotelRooms = await _context.HotelRooms
-          .Where(x => x.RoomNumber == RoomNumber && x.HotelId == hotelId)
-          .Include(x => x.RoomId).Include(x => x.Room.RoomAmenities)
+          .Where(x => x.RoomNumber == RoomNumber &&  x.HotelId == hotelId).Include(x => x.Room)
+          .Include(x => x.Room.RoomAmenities).Include(x => x.Hotel)
           .FirstAsync();
 
             return hotelRooms;
         }
-
+        public async Task<HotelRoom> UpdateRoom(int hotelId, int roomNumber, HotelRoom hotelRoom)
+        {
+            //var hotelRoom = await _context.room_amenities.FindAsync(hotelId, roomNumber);
+            var Temproom = await GetId(hotelId, roomNumber);
+            Temproom.RoomNumber = roomNumber;
+            Temproom.Rate = hotelRoom.Rate;
+            Temproom.PetFreindly = hotelRoom.PetFreindly;
+            _context.Entry(Temproom).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return Temproom;
+        }
 
 
         public async Task<HotelRoom> Delete(int hotelId, int RoomNumber)

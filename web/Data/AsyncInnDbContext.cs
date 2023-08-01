@@ -32,7 +32,7 @@ namespace web.Data
             modelBuilder.Entity<RoomAmenity>().HasKey(
                 roomamenity => new { roomamenity.RoomId, roomamenity.AmenityId });
             modelBuilder.Entity<HotelRoom>().HasKey(
-            hotelroom => new { hotelroom.RoomId, hotelroom.HotelId });
+            hotelroom => new { hotelroom.RoomNumber, hotelroom.HotelId });
         }
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<HotelRoom> HotelRooms{ get; set; }

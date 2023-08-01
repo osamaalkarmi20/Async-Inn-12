@@ -1,4 +1,6 @@
-﻿namespace web.Models.Interfaces
+﻿using web.Models.DTO;
+
+namespace web.Models.Interfaces
 {
     public interface IHotel
     {

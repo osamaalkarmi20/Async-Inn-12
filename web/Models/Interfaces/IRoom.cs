@@ -1,13 +1,15 @@
-﻿namespace web.Models.Interfaces
+﻿using web.Models.DTO;
+
+namespace web.Models.Interfaces
 {
     public interface IRoom
     {
-        Task<Room> Create(Room room);
-        Task<List<Room>> Get();
-        Task<Room> GetId(int roomId);
+        Task<RoomDTO> Create(Room room);
+        Task<List<RoomDTO>> Get();
+        Task<RoomDTO> GetId(int roomId);
 
-        Task<Room> Update(int id, Room updatedRoom);
-        Task<Room> Delete(int id);
+        Task<RoomDTO> Update(int id, Room updatedRoom);
+        Task<RoomDTO> Delete(int id);
         Task AddAmenityToRoom(int roomId, int amenityId);
 
         Task<RoomAmenity> DeleteAmenityToRoom(int roomId, int amenityId);
