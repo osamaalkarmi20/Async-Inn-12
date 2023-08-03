@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using web.Data;
 using web.Models;
+using web.Models.DTO;
 using web.Models.Interfaces;
 namespace web.Controller
 {
@@ -14,7 +15,7 @@ namespace web.Controller
     [ApiController]
     public class HotelsController : ControllerBase
     {
-        private readonly  IHotel _hotel;
+        private readonly IHotel _hotel;
 
         public HotelsController(IHotel hotel)
         {
@@ -23,16 +24,17 @@ namespace web.Controller
 
         // GET: api/Hotels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
+        public async Task<ActionResult<IEnumerable<HotelDTO>>> GetHotels()
         {
-            return await _hotel.Get();
+
+            return await _hotel.GetHotels();
         }
 
         // GET: api/Hotels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
+        public async Task<ActionResult<HotelDTO>> GetHotel(int id)
         {
-         return await _hotel.GetId(id);
+            return await _hotel.GetHotelId(id);
         }
 
         // PUT: api/Hotels/5
@@ -40,22 +42,16 @@ namespace web.Controller
         [HttpPut("{id}")]
         public async Task<IActionResult> PutHotel(int id, Hotel hotel)
         {
-            if (id != hotel.Id)
-            {
-                return BadRequest();
-            }
 
-         return  Ok(await _hotel.Update(id, hotel));
-
-
+            return Ok(await _hotel.Update(id, hotel));
         }
 
         // POST: api/Hotels
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
+        public async Task<ActionResult<HotelDTO>> PostHotel(Hotel hotel)
         {
-          return await _hotel.Create(hotel);
+            return await _hotel.Create(hotel);
         }
 
         // DELETE: api/Hotels/5
@@ -63,14 +59,10 @@ namespace web.Controller
         public async Task<IActionResult> DeleteHotel(int id, Hotel hotel)
         {
 
-            if (id != hotel.Id)
-            {
-                return BadRequest();
-            }
 
             return Ok(await _hotel.Delete(id));
         }
 
-      
+
     }
 }
