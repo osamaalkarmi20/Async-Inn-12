@@ -5,11 +5,10 @@ namespace web.Models.Interfaces
 {
     public interface IAmenity
     {
-        Task<AmenityDTO> Create(Amenity amenity);
-        Task<List<AmenityDTO>> Get();
-        Task<AmenityDTO> GetId(int amenityId);
-
-        Task<AmenityDTO> Update(int id, Amenity updatedAmenity );
+        Task<AmenityDTO> Create(Amenity aminity);
+        Task<List<AmenityDTO>> GetAmenities();
+        Task<AmenityDTO> GetAmenitieId(int id);
+        Task<AmenityDTO> Update(int id, Amenity amenity);
         Task<AmenityDTO> Delete(int id);
 
     }

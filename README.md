@@ -57,7 +57,13 @@ additional attributes:
    - `pet_friendly`: Indicates whether the room is pet-friendly.
 ##  Pure Joint Tables:
 the Location_Room table serves as a  Pure Joint table, consisting of foreign keys that reference the primary keys of the location  and Room tables and doesnot includes  any additional attributes or payload information.
-
+ ## DTO:
+ software development, DTO (Data Transfer Object) is a design pattern used to transfer data between different layers of an application. It is commonly used in service-oriented architectures or when data needs to be sent between different components or systems. 
+in this project there are 4 DTOs add to the project to help transfare the data between the layers :
+-AmenitDTO
+-RoomDTO
+-HotelDTO
+-HotelRoomDTO
 
 ## Repository Pattern:
 `HotelService` and `RoomService` and `AmenityService`  which serves as a centralized data access component following characteristics of the **Repository Pattern**.

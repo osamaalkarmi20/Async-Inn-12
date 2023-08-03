@@ -4,12 +4,11 @@ namespace web.Models.Interfaces
 {
     public interface IHotel
     {
-        Task<Hotel> Create(Hotel hotel);
-        Task<List<Hotel>> Get();
-        Task<Hotel> GetId(int hotelId);
-
-        Task<Hotel> Update(int id, Hotel updateedHotel);
-        Task<Hotel> Delete(int id);
-
+        Task<HotelDTO> Create(Hotel hotel);
+        Task<List<HotelDTO>> GetHotels();
+        Task<HotelDTO> GetHotelId(int id);
+        Task<HotelDTO> Update(int id, Hotel hotel);
+        Task<HotelDTO> Delete(int id);
     }
+
 }

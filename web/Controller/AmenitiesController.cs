@@ -27,50 +27,43 @@ namespace web.Controller
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AmenityDTO>>> GetAmenities()
         {
-          
-            return await _amenity.Get();
+
+            return await _amenity.GetAmenities();
         }
 
         // GET: api/Amenities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<AmenityDTO>> GetAmenity(int id)
+        public async Task<ActionResult<AmenityDTO>> GetAmenities(int id)
         {
-        
-            return await _amenity.GetId(id);
+
+
+            return await _amenity.GetAmenitieId(id);
         }
 
         // PUT: api/Amenities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAmenity(int id, Amenity amenity)
+        public async Task<IActionResult> PutAmenities(int id, Amenity amenities)
         {
-            if (id != amenity.Id)
-            {
-                return BadRequest();
-            }
 
-           
-            return Ok(await _amenity.Update(id, amenity));
+            return Ok(await _amenity.Update(id, amenities));
         }
 
         // POST: api/Amenities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<AmenityDTO>> PostAmenity(Amenity amenity)
+        public async Task<ActionResult<AmenityDTO>> PostAmenities(Amenity amenities)
         {
-
-            return await _amenity.Create(amenity);
+            return await _amenity.Create(amenities);
         }
 
         // DELETE: api/Amenities/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAmenity(int id)
+        public async Task<IActionResult> DeleteAmenities(int id)
         {
-            
-
             return Ok(await _amenity.Delete(id));
         }
 
-       
+
     }
 }

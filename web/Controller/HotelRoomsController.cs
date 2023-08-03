@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using web.Data;
 using web.Models;
+using web.Models.DTO;
 using web.Models.Interfaces;
 using web.Models.Services;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -26,64 +27,47 @@ namespace web.Controller
 
         }
 
-        // GET:/api/Hotels/{hotelId}/Rooms
+        // GET: api/HotelRooms
         [HttpGet]
-        [Route("Hotels/{hotelId}/Rooms")]
-        public async Task<ActionResult<List<HotelRoom>>> GetHotelRooms(int hotelId)
+
+        public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms()
         {
-            return await _hotelRoom.Get(hotelId);
+            return await _hotelRoom.GetHotelRooms();
         }
 
-
-        [HttpPost]
-        [Route("Hotels/{hotelId}/Rooms")]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(int hotelId, HotelRoom hotelRoom)
-        {
-
-            return await _hotelRoom.Create(hotelId, hotelRoom);
-
-        }
         // GET: api/HotelRooms/5
-        [HttpGet("Hotels/{hotelId}/Rooms/{RoomNumber}")]
-        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int hotelId,int RoomNumber)
+        [HttpGet("Hotels/{hotelId}/Rooms/{roomNumber}")]
+        public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom(int hotelId, int roomNumber)
         {
+            return await _hotelRoom.GetHotelRoomId(hotelId, roomNumber);
 
-
-
-            return await _hotelRoom.GetId(hotelId, RoomNumber);
         }
 
-        [HttpPut]
-        [Route("Hotels/{hotelId}/Rooms/{roomNumber}")]
-        public async Task<IActionResult> PutHotelRoom(int hotelId, int roomNumber, HotelRoom hotelRoom)
-        {
-            try
-            {
-                await _hotelRoom.UpdateRoom(hotelId, roomNumber, hotelRoom);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                // Log the exception if needed
-                return StatusCode(500, "An error occurred while updating the hotel room.");
-            }
-        }
-
-        // POST: "/Hotels/{hotelId}/Rooms
+        // PUT: api/HotelRooms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-       
+        [HttpPut("Hotel/{hotelId}/Room/{idRoom}")]
+        public async Task<IActionResult> PutHotelRoom(int hotelId, int idRoom, HotelRoom hotelRoom)
+        {
+            return Ok(await _hotelRoom.Update(hotelId, idRoom, hotelRoom));
+        }
+
+        // POST: api/HotelRooms
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<HotelRoomDTO>> PostHotelRoom(HotelRoom hotelRoom)
+        {
+            return await _hotelRoom.Create(hotelRoom);
+
+        }
 
         // DELETE: api/HotelRooms/5
-        [HttpDelete]
-        [Route("Hotels/{hotelId}/Rooms/{RoomNumber}")]
-        public async Task<IActionResult> DeleteHotelRoom(int hotelId, int RoomNumber)
+        [HttpDelete("Hotel/{hotelId}/Room/{idRoom}")]
+        public async Task<HotelRoomDTO> DeleteHotelRoom(int hotelId, int idRoom)
         {
-            await _hotelRoom.Delete(hotelId, RoomNumber);
-            {
-                return Ok();
-            }
+            // return Ok(await _hoteRoom.Delete(hotelId, idRoom));
 
-
+            return await _hotelRoom.Delete(hotelId, idRoom);
         }
+
     }
 }
