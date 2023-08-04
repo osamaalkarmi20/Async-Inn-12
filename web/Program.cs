@@ -9,26 +9,7 @@ namespace web
 {
     public class Program
     {
-        //   public static void Main(string[] args)
-        //   {
-        //       var builder = WebApplication.CreateBuilder(args);
-        //       builder.Services.AddControllers();
-        //       string connString = builder.Configuration.GetConnectionString("DefaultConnection");
-        //       builder.Services.AddDbContext<AsyncInnDbContext>(options=> options.UseSqlServer(connString));
-        //       builder.Services.AddControllers().AddNewtonsoftJson(options =>
-        //  options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-        //);
-        //       builder.Services.AddTransient<IRoom, RoomService>();
-        //       builder.Services.AddTransient<IHotel, HotelService>();
-        //       builder.Services.AddTransient<IAmenity, AmenityService>();
-        //       builder.Services.AddTransient<IHotelRoom, HotelRoomService>();
-        //       var app = builder.Build();
-        //       app.MapControllers();
-
-        //       app.MapGet("/", () => "Hello World!");
-
-        //       app.Run();
-        //   }
+       
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -42,12 +23,32 @@ namespace web
             builder.Services.AddTransient<IAmenity, AmenityService>();
             builder.Services.AddTransient<IHotelRoom, HotelRoomService>();
 
+
+            builder.Services.AddSwaggerGen(option =>
+            option.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+            {
+                Title = "Async Inn API",
+                Version = "v1",
+            })
+            );
+
+
+
             builder.Services.AddControllers();
             builder.Services.AddControllers().AddNewtonsoftJson(
         option => option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
         );
 
             var app = builder.Build();
+            app.UseSwagger(options=>
+            options.RouteTemplate="api/{documentName}/swagger.json");
+           
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/api/v1/swagger.json", "Async Inn API");
+                options.RoutePrefix = "docs";
+            });
+
             app.MapControllers();
 
             app.MapGet("/", () => "Hello World!");
