@@ -67,7 +67,7 @@ in this project there are 4 DTOs add to the project to help transfare the data b
 
 ## Test for crud opreations Rooms and Hotels:
 
-
+![test](test.png)
 ## Swagger:
 this is a swagger add to the code to make it easyer for the development to greatly improve the development and documentation experience.
 Swagger is a tool that allows you to generate interactive API documentation, making it easier for developers to understand and interact with your API.
