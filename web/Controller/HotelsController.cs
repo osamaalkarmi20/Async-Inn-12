@@ -22,7 +22,10 @@ namespace web.Controller
             _hotel = hotel;
         }
 
-        // GET: api/Hotels
+        /// <summary>
+        /// Retrieves a list of all hotels from the database along with their associated rooms and amenities.
+        /// </summary>
+        /// <returns>An ActionResult containing a list of HotelDTO objects representing all hotels and their rooms.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<HotelDTO>>> GetHotels()
         {
@@ -30,15 +33,24 @@ namespace web.Controller
             return await _hotel.GetHotels();
         }
 
-        // GET: api/Hotels/5
+        /// <summary>
+        /// Retrieves a hotel's details from the database by the given hotel ID and returns a HotelDTO representing the hotel.
+        /// </summary>
+        /// <param name="id">The ID of the hotel to retrieve.</param>
+        /// <returns>An ActionResult containing the HotelDTO representing the requested hotel.</returns>
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<HotelDTO>> GetHotel(int id)
         {
             return await _hotel.GetHotelId(id);
         }
 
-        // PUT: api/Hotels/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates an existing hotel in the database by the given hotel ID and new Hotel object.
+        /// </summary>
+        /// <param name="id">The ID of the hotel to update.</param>
+        /// <param name="hotel">The updated Hotel object.</param>
+        /// <returns>An IActionResult indicating the success or failure of the update operation.</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutHotel(int id, Hotel hotel)
         {
@@ -46,15 +58,22 @@ namespace web.Controller
             return Ok(await _hotel.Update(id, hotel));
         }
 
-        // POST: api/Hotels
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creates a new hotel in the database and returns the corresponding HotelDTO.
+        /// </summary>
+        /// <param name="hotel">The Hotel object to be created.</param>
+        /// <returns>An ActionResult containing the HotelDTO representing the created hotel.</returns>
         [HttpPost]
         public async Task<ActionResult<HotelDTO>> PostHotel(Hotel hotel)
         {
             return await _hotel.Create(hotel);
         }
 
-        // DELETE: api/Hotels/5
+        /// <summary>
+        /// Deletes a hotel from the database by the given hotel ID and returns the corresponding HotelDTO before deletion.
+        /// </summary>
+        /// <param name="id">The ID of the hotel to be deleted.</param>
+        /// <returns>An IActionResult indicating the success or failure of the delete operation.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHotel(int id, Hotel hotel)
         {

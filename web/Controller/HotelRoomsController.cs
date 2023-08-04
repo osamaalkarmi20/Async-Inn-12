@@ -27,7 +27,10 @@ namespace web.Controller
 
         }
 
-        // GET: api/HotelRooms
+        /// <summary>
+        /// Retrieves a list of all hotel rooms from the database along with their associated hotel and room details.
+        /// </summary>
+        /// <returns>An ActionResult containing a list of HotelRoomDTO objects representing all hotel rooms.</returns>
         [HttpGet]
 
         public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms()
@@ -35,7 +38,14 @@ namespace web.Controller
             return await _hotelRoom.GetHotelRooms();
         }
 
-        // GET: api/HotelRooms/5
+
+        /// <summary>
+        /// Retrieves a hotel room's details from the database by the given hotel ID and room number,
+        /// and returns a HotelRoomDTO representing the hotel room.
+        /// </summary>
+        /// <param name="hotelId">The ID of the hotel to which the room belongs.</param>
+        /// <param name="roomNumber">The number of the room within the hotel.</param>
+        /// <returns>An ActionResult containing the HotelRoomDTO representing the requested hotel room.</returns>
         [HttpGet("Hotels/{hotelId}/Rooms/{roomNumber}")]
         public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom(int hotelId, int roomNumber)
         {
@@ -43,24 +53,37 @@ namespace web.Controller
 
         }
 
-        // PUT: api/HotelRooms/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates an existing hotel room in the database by the given hotel ID, room number, and new HotelRoom object.
+        /// </summary>
+        /// <param name="hotelId">The ID of the hotel to which the room belongs.</param>
+        /// <param name="idRoom">The number of the room within the hotel.</param>
+        /// <param name="hotelRoom">The updated HotelRoom object.</param>
+        /// <returns>An IActionResult indicating the success or failure of the update operation.</returns>
+       
         [HttpPut("Hotel/{hotelId}/Room/{idRoom}")]
         public async Task<IActionResult> PutHotelRoom(int hotelId, int idRoom, HotelRoom hotelRoom)
         {
             return Ok(await _hotelRoom.Update(hotelId, idRoom, hotelRoom));
         }
-
-        // POST: api/HotelRooms
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creates a new hotel room in the database and returns the corresponding HotelRoomDTO.
+        /// </summary>
+        /// <param name="hotelRoom">The HotelRoom object to be created.</param>
+        /// <returns>An ActionResult containing the HotelRoomDTO representing the created hotel room.</returns>
         [HttpPost]
         public async Task<ActionResult<HotelRoomDTO>> PostHotelRoom(HotelRoom hotelRoom)
         {
             return await _hotelRoom.Create(hotelRoom);
 
         }
-
-        // DELETE: api/HotelRooms/5
+        /// <summary>
+        /// Deletes a hotel room from the database by the given hotel ID and room number,
+        /// and returns the corresponding HotelRoomDTO before deletion.
+        /// </summary>
+        /// <param name="hotelId">The ID of the hotel to which the room belongs.</param>
+        /// <param name="idRoom">The number of the room within the hotel.</param>
+        /// <returns>An ActionResult containing the HotelRoomDTO representing the deleted hotel room.</returns>
         [HttpDelete("Hotel/{hotelId}/Room/{idRoom}")]
         public async Task<HotelRoomDTO> DeleteHotelRoom(int hotelId, int idRoom)
         {

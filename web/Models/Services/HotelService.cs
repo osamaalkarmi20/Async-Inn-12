@@ -15,7 +15,13 @@ namespace web.Models.Services
         {
             _context = context;
         }
+        /// <summary>
+        /// Deletes a hotel from the database by the given hotel ID and returns the corresponding HotelDTO before deletion.
+        /// </summary>
+        /// <param name="id">The ID of the hotel to be deleted.</param>
+        /// <returns>The HotelDTO representing the deleted hotel.</returns>
         public async Task<HotelDTO> Delete(int id)
+
         {
             var hotelDTO = await GetHotelId(id);
 
@@ -28,7 +34,13 @@ namespace web.Models.Services
             return hotelDTO;
         }
 
+        /// <summary>
+        /// Retrieves a hotel's details from the database by the given hotel ID and returns a HotelDTO representing the hotel.
+        /// </summary>
+        /// <param name="id">The ID of the hotel to retrieve.</param>
+        /// <returns>The HotelDTO representing the requested hotel.</returns>
         public async Task<HotelDTO> GetHotelId(int id)
+
         {
             var hotel = await _context.Hotels.Where(h => h.Id == id).FirstOrDefaultAsync();
 
@@ -45,8 +57,13 @@ namespace web.Models.Services
 
             return hotedto;
         }
-
+        /// <summary>
+        /// Retrieves a list of all hotels from the database along with their associated rooms and amenities.
+        /// Returns a list of HotelDTO objects representing all hotels and their rooms.
+        /// </summary>
+        /// <returns>A list of HotelDTO objects representing all hotels and their rooms.</returns>
         public async Task<List<HotelDTO>> GetHotels()
+
         {
             return await _context.Hotels
                 .Include(h => h.HotelRooms)
@@ -84,7 +101,13 @@ namespace web.Models.Services
         }
 
 
+        /// <summary>
+        /// Creates a new hotel in the database and returns the corresponding HotelDTO.
+        /// </summary>
+        /// <param name="hotel">The Hotel object to be created.</param>
+        /// <returns>The HotelDTO representing the created hotel.</returns>
         public async Task<HotelDTO> Create(Hotel hotel)
+
         {
             var hoteldto = new HotelDTO();
             hoteldto.Name = hotel.Name;
@@ -96,7 +119,13 @@ namespace web.Models.Services
             await _context.SaveChangesAsync();
             return hoteldto;
         }
-
+        /// <summary>
+        /// Updates an existing hotel in the database by the given hotel ID and new Hotel object.
+        /// Returns the HotelDTO representing the hotel before the update.
+        /// </summary>
+        /// <param name="id">The ID of the hotel to update.</param>
+        /// <param name="hotel">The updated Hotel object.</param>
+        /// <returns>The HotelDTO representing the hotel before the update.</returns>
         public async Task<HotelDTO> Update(int id, Hotel hotel)
         {
             var hotels = await _context.Hotels.Where(h => h.Id == id).FirstOrDefaultAsync();

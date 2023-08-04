@@ -22,16 +22,21 @@ namespace web.Controller
         {
             _amenity = amenity;
         }
-
-        // GET: api/Amenities
+        /// <summary>
+        /// Retrieves a list of all amenities from the database.
+        /// </summary>
+        /// <returns>An ActionResult containing a list of AmenityDTO objects representing all amenities.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AmenityDTO>>> GetAmenities()
         {
 
             return await _amenity.GetAmenities();
         }
-
-        // GET: api/Amenities/5
+        /// <summary>
+        /// Retrieves an amenity's details from the database by the given amenity ID and returns an AmenityDTO representing the amenity.
+        /// </summary>
+        /// <param name="id">The ID of the amenity to retrieve.</param>
+        /// <returns>An ActionResult containing the AmenityDTO representing the requested amenity.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<AmenityDTO>> GetAmenities(int id)
         {
@@ -40,24 +45,34 @@ namespace web.Controller
             return await _amenity.GetAmenitieId(id);
         }
 
-        // PUT: api/Amenities/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates an existing amenity in the database by the given amenity ID and new Amenity object.
+        /// </summary>
+        /// <param name="id">The ID of the amenity to update.</param>
+        /// <param name="amenities">The updated Amenity object.</param>
+        /// <returns>An IActionResult indicating the success or failure of the update operation.</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAmenities(int id, Amenity amenities)
         {
 
             return Ok(await _amenity.Update(id, amenities));
         }
-
-        // POST: api/Amenities
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creates a new amenity in the database and returns the corresponding AmenityDTO.
+        /// </summary>
+        /// <param name="amenities">The Amenity object to be created.</param>
+        /// <returns>An ActionResult containing the AmenityDTO representing the created amenity.</returns>
         [HttpPost]
         public async Task<ActionResult<AmenityDTO>> PostAmenities(Amenity amenities)
         {
             return await _amenity.Create(amenities);
         }
 
-        // DELETE: api/Amenities/5
+        /// <summary>
+        /// Deletes an amenity from the database by the given amenity ID and returns an IActionResult indicating the success or failure of the delete operation.
+        /// </summary>
+        /// <param name="id">The ID of the amenity to be deleted.</param>
+        /// <returns>An IActionResult indicating the success or failure of the delete operation.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAmenities(int id)
         {
