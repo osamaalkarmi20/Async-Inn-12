@@ -65,6 +65,37 @@ in this project there are 4 DTOs add to the project to help transfare the data b
 -HotelDTO
 -HotelRoomDTO
 
+## Test for crud opreations Rooms and Hotels:
+
+
+## Swagger:
+this is a swagger add to the code to make it easyer for the development to greatly improve the development and documentation experience.
+Swagger is a tool that allows you to generate interactive API documentation, making it easier for developers to understand and interact with your API.
+# this is the packgages add to implement the swagger:
+`Swashbuckle.AspNetCore`
+# this is the code add to apply swagger:
+```c#
+    app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/api/v1/swagger.json", "Async Inn API");
+                options.RoutePrefix = "docs";
+            });
+```
+```c#
+   builder.Services.AddSwaggerGen(option =>
+            option.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+            {
+                Title = "Async Inn API",
+                Version = "v1",
+            })
+            );
+```
+```c#
+var app = builder.Build();
+            app.UseSwagger(options=>
+            options.RouteTemplate="api/{documentName}/swagger.json");
+```
+
 ## Repository Pattern:
 `HotelService` and `RoomService` and `AmenityService`  which serves as a centralized data access component following characteristics of the **Repository Pattern**.
 Despite being named as a "service," it functions as a repository for (hotel/room/amenity )related data operations. 
@@ -74,7 +105,7 @@ The `IHotel` `IRoom` `IAmenity` interfaces serves as a contract that any class r
 By defining these methods in the interface, the application can achieve decoupling between the data access layer and the rest of the application, enabling flexible data storage implementations and improving testability and maintainability.
 ## RoomAmenities routes:
 this are the routes for the roomamentiy  table:
- ``` 
+```c#
    [HttpPost("{roomId}/Amenity/{amenityId}")]
        
         public async Task<IActionResult> AddAmenityToRoom(int roomId, int amenityId)
@@ -94,5 +125,9 @@ this are the routes for the roomamentiy  table:
             return Ok();
         }
     }
-    ```
+
+```
 this routes were to add and delet form the table roomamentiy.
+
+
+
