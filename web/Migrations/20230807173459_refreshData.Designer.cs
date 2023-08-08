@@ -11,8 +11,8 @@ using web.Data;
 namespace web.Migrations
 {
     [DbContext(typeof(AsyncInnDbContext))]
-    [Migration("20230803080144_redodata2")]
-    partial class redodata2
+    [Migration("20230807173459_refreshData")]
+    partial class refreshData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

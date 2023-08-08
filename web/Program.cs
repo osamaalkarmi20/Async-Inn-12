@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using web.Data;
+using web.Models;
 using web.Models.Interfaces;
 using web.Models.Services;
 
@@ -17,7 +19,11 @@ namespace web
             string connString = builder.Configuration.GetConnectionString("DefaultConnection");
 
             builder.Services.AddDbContext<AsyncInnDbContext>(options => options.UseSqlServer(connString));
-
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<AsyncInnDbContext>();
+            builder.Services.AddTransient<IUser, IdentityUserService>();
             builder.Services.AddTransient<IHotel, HotelServices>();
             builder.Services.AddTransient<IRoom, RoomService>();
             builder.Services.AddTransient<IAmenity, AmenityService>();
