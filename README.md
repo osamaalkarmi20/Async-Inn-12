@@ -60,10 +60,72 @@ the Location_Room table serves as a  Pure Joint table, consisting of foreign key
  ## DTO:
  software development, DTO (Data Transfer Object) is a design pattern used to transfer data between different layers of an application. It is commonly used in service-oriented architectures or when data needs to be sent between different components or systems. 
 in this project there are 4 DTOs add to the project to help transfare the data between the layers :
+
 -AmenitDTO
+
 -RoomDTO
+
 -HotelDTO
+
 -HotelRoomDTO
+
+## login and register (Identity):
+ Identity refers to a system that manages and represents user authentication and authorization.
+ It is a core component of building secure web applications and managing user access to various resources within the application.
+ you will send a body for regestration as the dto pf the regestration and will reseve the dto of the user.
+ in my code it is  used in the regeister path and the login path this is impelment in this codes:
+```c#
+  public async Task<UserDTO> Authenticate(string username, string password)
+        {
+            var user = await userManager.FindByNameAsync(username);
+
+            bool validPassword = await userManager.CheckPasswordAsync(user, password);
+
+            if (validPassword)
+            {
+                return new UserDTO { Id = user.Id, Username = user.UserName };
+            }
+            return null;
+        }
+
+        public async Task<UserDTO> Register(RegisterUserDTO registerUser, ModelStateDictionary modelState)
+        {
+          
+
+            var user = new ApplicationUser()
+            {
+                UserName = registerUser.Username,
+                Email = registerUser.Email,
+                PhoneNumber = registerUser.PhoneNumber,
+            };
+
+            var result = await userManager.CreateAsync(user, registerUser.Password);
+
+
+            if (result.Succeeded)
+            {
+                return new UserDTO()
+                {
+                    Id = user.Id,
+                    Username = user.UserName
+                };
+            }
+
+            foreach (var error in result.Errors)
+            {
+                var errorKey = error.Code.Contains("Password") ? nameof(registerUser.Password) :
+                               error.Code.Contains("Email") ? nameof(registerUser.Email) :
+                               error.Code.Contains("Username") ? nameof(registerUser.Username) :
+                               "";
+
+                modelState.AddModelError(errorKey, error.Description);
+            }
+
+            return null;
+        }
+    }
+
+```
 
 ## Test for crud opreations Rooms and Hotels:
 

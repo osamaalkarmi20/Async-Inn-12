@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Metrics;
 using System.Numerics;
 using web.Models;
@@ -6,14 +7,17 @@ using web.Models.Interfaces;
 
 namespace web.Data
 {
-    public class AsyncInnDbContext: DbContext
+    public class AsyncInnDbContext: IdentityDbContext<ApplicationUser>
     {
         public AsyncInnDbContext(DbContextOptions options): base(options)
         {
-
+  
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Hotel>().HasData(
                 new Hotel() { Id = 1, Name = "cont", StreetAddress="23.st", City ="NY", State ="NY", Country ="US", Phone ="1233442"},
                 new Hotel() { Id = 2, Name = "res"  ,StreetAddress = "25.st", City = "LA", State = "LA", Country = "US", Phone = "1233444442" },
