@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using web.Models.Interfaces;
 
 namespace web.Controller
 {
+    [Authorize(Roles = "District Manager")]
     [Route("api/[controller]")]
     [ApiController]
     public class AmenitiesController : ControllerBase
@@ -26,6 +28,8 @@ namespace web.Controller
         /// Retrieves a list of all amenities from the database.
         /// </summary>
         /// <returns>An ActionResult containing a list of AmenityDTO objects representing all amenities.</returns>
+        [AllowAnonymous]
+        [Authorize(Roles = "Property Manager")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AmenityDTO>>> GetAmenities()
         {
@@ -37,6 +41,8 @@ namespace web.Controller
         /// </summary>
         /// <param name="id">The ID of the amenity to retrieve.</param>
         /// <returns>An ActionResult containing the AmenityDTO representing the requested amenity.</returns>
+        [AllowAnonymous]
+        [Authorize(Roles = "Property Manager")]
         [HttpGet("{id}")]
         public async Task<ActionResult<AmenityDTO>> GetAmenities(int id)
         {
@@ -51,6 +57,7 @@ namespace web.Controller
         /// <param name="id">The ID of the amenity to update.</param>
         /// <param name="amenities">The updated Amenity object.</param>
         /// <returns>An IActionResult indicating the success or failure of the update operation.</returns>
+        [Authorize(Roles = "Property  Manager")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAmenities(int id, Amenity amenities)
         {
@@ -62,6 +69,8 @@ namespace web.Controller
         /// </summary>
         /// <param name="amenities">The Amenity object to be created.</param>
         /// <returns>An ActionResult containing the AmenityDTO representing the created amenity.</returns>
+        [Authorize(Roles = "Property  Manager")]
+        [Authorize(Roles = "Agent")]
         [HttpPost]
         public async Task<ActionResult<AmenityDTO>> PostAmenities(Amenity amenities)
         {
@@ -73,6 +82,7 @@ namespace web.Controller
         /// </summary>
         /// <param name="id">The ID of the amenity to be deleted.</param>
         /// <returns>An IActionResult indicating the success or failure of the delete operation.</returns>
+        [Authorize(Roles = "Agent")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAmenities(int id)
         {

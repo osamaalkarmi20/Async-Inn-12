@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using web.Models.Interfaces;
 
 namespace web.Controller
 {
+    [Authorize(Roles = "District Manager")]
     [Route("api/[controller]")]
     [ApiController]
     public class RoomsController : ControllerBase
@@ -27,6 +29,7 @@ namespace web.Controller
         /// Retrieves a list of all rooms from the database along with their associated amenities.
         /// </summary>
         /// <returns>An ActionResult containing a list of RoomDTO objects representing all rooms.</returns>
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RoomDTO>>> GetRooms()
         {
@@ -39,6 +42,7 @@ namespace web.Controller
         /// </summary>
         /// <param name="id">The ID of the room to retrieve.</param>
         /// <returns>An ActionResult containing the RoomDTO representing the requested room.</returns>
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<RoomDTO>> GetRoom(int id)
         {
@@ -85,6 +89,9 @@ namespace web.Controller
         /// <param name="amenityId">The ID of the amenity to add to the room.</param>
         /// <returns>A RoomAmenity object representing the added association between the room and amenity.</returns>
         [HttpPost]
+        [Authorize(Roles = "Agent")]
+        [Authorize(Roles = "Property Manager")]
+
         [Route("{roomId}/Amenity/{amenityId}")]
         public async Task<RoomAmenity> PostRoomaded(int roomId, int amenityId)
         {
@@ -99,6 +106,8 @@ namespace web.Controller
         /// <returns>A RoomAmenity object representing the removed association between the room and amenity.</returns>
         
         [HttpDelete]
+        [Authorize(Roles = "Agent")]
+
         [Route("{roomId}/Amenity/{amenityId}")]
         public async Task<RoomAmenity> DeleteRoomaded(int roomId, int amenityId)
         {

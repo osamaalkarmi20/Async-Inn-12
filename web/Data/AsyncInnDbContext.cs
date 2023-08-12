@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Metrics;
 using System.Numerics;
@@ -33,10 +34,32 @@ namespace web.Data
               new Amenity() { Id = 2, Name = "coffeeBar" },
               new Amenity() { Id = 3, Name = "Fridge"}
               );
+
             modelBuilder.Entity<RoomAmenity>().HasKey(
                 roomamenity => new { roomamenity.RoomId, roomamenity.AmenityId });
             modelBuilder.Entity<HotelRoom>().HasKey(
             hotelroom => new { hotelroom.RoomNumber, hotelroom.HotelId });
+
+
+
+            seedRole(modelBuilder, "District Manager");
+            seedRole(modelBuilder, "Property Manager");
+            seedRole(modelBuilder, "Agent");
+
+
+        }
+
+        private void seedRole(ModelBuilder modelBuilder, string roleName)
+        {
+            var role = new IdentityRole
+            {
+                Id = roleName.ToLower(),
+                Name = roleName,
+                NormalizedName = roleName.ToUpper(),
+                ConcurrencyStamp = Guid.Empty.ToString()
+            };
+            modelBuilder.Entity<IdentityRole>().HasData(role);
+
         }
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<HotelRoom> HotelRooms{ get; set; }

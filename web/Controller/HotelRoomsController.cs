@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace web.Controller
 {
+    [Authorize(Roles = "District Manager")]
     [Route("api/[controller]")]
     [ApiController]
     public class HotelRoomsController : ControllerBase
@@ -31,6 +33,9 @@ namespace web.Controller
         /// Retrieves a list of all hotel rooms from the database along with their associated hotel and room details.
         /// </summary>
         /// <returns>An ActionResult containing a list of HotelRoomDTO objects representing all hotel rooms.</returns>
+        [AllowAnonymous]
+        [Authorize(Roles = "Agent")]
+        [Authorize(Roles = "Property Manager")]
         [HttpGet]
 
         public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms()
@@ -46,6 +51,9 @@ namespace web.Controller
         /// <param name="hotelId">The ID of the hotel to which the room belongs.</param>
         /// <param name="roomNumber">The number of the room within the hotel.</param>
         /// <returns>An ActionResult containing the HotelRoomDTO representing the requested hotel room.</returns>
+        [AllowAnonymous]
+        [Authorize(Roles = "Agent")]
+        [Authorize(Roles = "Property Manager")]
         [HttpGet("Hotels/{hotelId}/Rooms/{roomNumber}")]
         public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom(int hotelId, int roomNumber)
         {
@@ -60,8 +68,10 @@ namespace web.Controller
         /// <param name="idRoom">The number of the room within the hotel.</param>
         /// <param name="hotelRoom">The updated HotelRoom object.</param>
         /// <returns>An IActionResult indicating the success or failure of the update operation.</returns>
-       
+        [Authorize(Roles = "Agent")]
+        [Authorize(Roles = "Property Manager")]
         [HttpPut("Hotel/{hotelId}/Room/{idRoom}")]
+        
         public async Task<IActionResult> PutHotelRoom(int hotelId, int idRoom, HotelRoom hotelRoom)
         {
             return Ok(await _hotelRoom.Update(hotelId, idRoom, hotelRoom));
@@ -72,6 +82,7 @@ namespace web.Controller
         /// <param name="hotelRoom">The HotelRoom object to be created.</param>
         /// <returns>An ActionResult containing the HotelRoomDTO representing the created hotel room.</returns>
         [HttpPost]
+        [Authorize(Roles = "Property Manager")]
         public async Task<ActionResult<HotelRoomDTO>> PostHotelRoom(HotelRoom hotelRoom)
         {
             return await _hotelRoom.Create(hotelRoom);

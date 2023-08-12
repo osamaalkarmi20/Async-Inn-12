@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using web.Models.DTO;
 using web.Models.Interfaces;
 namespace web.Controller
 {
+    [Authorize(Roles = "District Manager")]
     [Route("api/[controller]")]
     [ApiController]
     public class HotelsController : ControllerBase
@@ -26,6 +28,7 @@ namespace web.Controller
         /// Retrieves a list of all hotels from the database along with their associated rooms and amenities.
         /// </summary>
         /// <returns>An ActionResult containing a list of HotelDTO objects representing all hotels and their rooms.</returns>
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<HotelDTO>>> GetHotels()
         {
@@ -38,7 +41,7 @@ namespace web.Controller
         /// </summary>
         /// <param name="id">The ID of the hotel to retrieve.</param>
         /// <returns>An ActionResult containing the HotelDTO representing the requested hotel.</returns>
-        
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<HotelDTO>> GetHotel(int id)
         {

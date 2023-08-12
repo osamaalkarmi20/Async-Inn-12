@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis.Options;
@@ -29,6 +30,23 @@ namespace web
             builder.Services.AddTransient<IAmenity, AmenityService>();
             builder.Services.AddTransient<IHotelRoom, HotelRoomService>();
 
+            builder.Services.AddScoped<JWTTokenService>();
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+               
+                options.TokenValidationParameters = JWTTokenService.GetValidationPerameters(builder.Configuration);
+            });
+
+      
+            builder.Services.AddAuthorization();
+
+
 
             builder.Services.AddSwaggerGen(option =>
             option.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
@@ -46,6 +64,8 @@ namespace web
         );
 
             var app = builder.Build();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseSwagger(options=>
             options.RouteTemplate="api/{documentName}/swagger.json");
            
