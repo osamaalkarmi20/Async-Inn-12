@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using web.Models.DTO;
 using web.Models.Interfaces;
@@ -42,5 +43,13 @@ namespace web.Controller
             }
             return user;
         }
+
+        [Authorize(Roles = "District Manager")]
+        [HttpGet("Profile")]
+        public async Task<ActionResult<UserDTO>> Profile()
+        {
+            return await userService.GetUser(this.User);
+        }
+
     }
 }
