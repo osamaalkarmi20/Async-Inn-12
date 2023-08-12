@@ -126,7 +126,12 @@ in this project there are 4 DTOs add to the project to help transfare the data b
     }
 
 ```
-
+## Roles :
+this is the part that spreates between the user (Agents ) and the property mangers and the district manger and shows wat can thety access and what can they do :
+for example : district manger can do all the opreations on the api as he has the full accesson the controllers
+the property manager can add/update/read new HotelRooms to hotels, and amenities to rooms.
+the  agent can only update/read a HotelRoom and add/delete amenities to rooms.
+so the agent "can't" delete a hotelRoom . as he is only an agent . 
 ## Test for crud opreations Rooms and Hotels:
 
 ![test](test.png)
